@@ -32,5 +32,10 @@ namespace FermCore.Service.AD
             return _mongoService.GetById<AdModel>(colName, id);
         }
 
+        public void Insert(AdModel ad)
+        {
+            _mongoService.Insert(colName, ad);
+        }
+
     }
 }

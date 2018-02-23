@@ -35,6 +35,12 @@ namespace FermCore.Service.Mongo
             return collection.Find(new BsonDocument("_id", id)).First();
         }
 
+        public void Insert<T>(string collectionName, T obj) where T : DbModel
+        {
+            var collection = _dbMongo.Database.GetCollection<T>(collectionName);
+            collection.InsertOneAsync(obj);
+        }
+
         public DBUser CreateUser(DBUser user, string collectionName)
         {
             if(user.Email == null || user.Password == null)
@@ -65,7 +71,7 @@ namespace FermCore.Service.Mongo
                 new BsonDocument("Email", email)
             });
             var collection = _dbMongo.Database.GetCollection<DBUser>(collectionName);
-            var user = collection.Find<DBUser>(filter).First();
+            var user = collection.Find<DBUser>(filter).FirstOrDefault();
 
             return user;
         }
