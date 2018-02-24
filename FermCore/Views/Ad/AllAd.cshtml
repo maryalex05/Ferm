@@ -1,0 +1,18 @@
+﻿@model List<FermCore.DB.Model.AdModel>
+@{
+    ViewData["Title"] = "AllAd";
+}
+
+<h2>Все объявления</h2>
+
+@foreach (var ad in Model)
+{
+    <div>
+        <a asp-controller="Ad" asp-action="ViewAd" asp-route-adId="@ad.Id">@ad.Name</a>
+        <p>@ad.TimeCreate</p>
+        
+    </div>
+}
+
+
+

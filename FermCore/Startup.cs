@@ -61,7 +61,7 @@ namespace FermCore
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Ad}/{action=AllAd}/{id?}");
             });
         }
     }

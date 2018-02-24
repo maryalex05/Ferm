@@ -3,6 +3,7 @@ using FermCore.Service.AD;
 using FermCore.Service.User;
 using FermCore.ViewModels;
 using FermCore.ViewModels.AD;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MongoDB.Bson;
@@ -28,9 +29,24 @@ namespace FermCore.Controllers
         [HttpGet]
         public IActionResult AllAd()
         {
+            var ads = _aDService.GetAll();
+            return View(ads);
+        }
+
+        [HttpGet]
+        public IActionResult ViewAd(string adId)
+        {
+            var ad = _aDService.GetById(ObjectId.Parse(adId));
+            return View(ad);
+        }
+
+        [HttpPost]
+        public IActionResult AllAd(string adType, int page)
+        {
             return View();
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult AddingAd()
         {
@@ -39,6 +55,7 @@ namespace FermCore.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult AddingAd(AdViewModel adViewModel)
         {
@@ -53,6 +70,10 @@ namespace FermCore.Controllers
 
                 _aDService.Insert(ad, user.Id);
             }
+
+            var adTypes = _aDService.GetAllAdType().Select(x => new { Id = x.Id.ToString(), Name = x.Name });
+            ViewBag.AdTypes = new SelectList(adTypes, "Id", "Name");
+
             return View(adViewModel);
         }
 
