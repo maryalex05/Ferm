@@ -9,7 +9,8 @@ namespace FermCore.DB.Model
 {
     public class AdModel: DbModel
     {
-        public AdType AdType { get; set; }
+        
+        public ObjectId AdTypeId { get; set; }
 
         public string Name { get; set; }
 

@@ -28,6 +28,16 @@ namespace FermCore.Service.Mongo
             return coll;
         }
 
+        public List<T> GetAll<T>(string collectionName, int limit = 20, int skip = 0)
+        {
+            var filter = new BsonDocument();
+            var collection = _dbMongo.Database.GetCollection<T>(collectionName);
+            var coll = collection.Find(filter)
+                .Skip(skip)
+                .Limit(limit).ToListAsync().Result;
+            return coll;
+        }
+
         // получаем один документ по id
         public T GetById<T>(string collectionName, ObjectId id)
         {
@@ -39,6 +49,13 @@ namespace FermCore.Service.Mongo
         {
             var collection = _dbMongo.Database.GetCollection<T>(collectionName);
             collection.InsertOneAsync(obj);
+        }
+
+        public void Delete<T>(string collectionName, T obj) where T : DbModel
+        {
+            var collection = _dbMongo.Database.GetCollection<T>(collectionName);
+            var filter = new BsonDocument("_id", obj.Id);
+            collection.DeleteOne(filter);
         }
 
         public DBUser CreateUser(DBUser user, string collectionName)

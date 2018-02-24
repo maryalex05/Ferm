@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace FermCore.DB.Model
 {
-    public enum AdType
+    public class AdType : DbModel
     {
-        Cheese,//Сыр
-        Meat,//Мясо
-        Flour,//Мука
+        public string Name { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace FermCore
             services.AddMvc();
             services.AddSingleton(new DBMongo(Configuration.GetSection("DB:MongoConnection").Value));
             services.AddTransient<MongoService>();
-            services.AddTransient<IADReadService, AdService>();
+            services.AddTransient<IADService, AdService>();
             services.AddTransient<IUserService, UserService>();
         }
 
