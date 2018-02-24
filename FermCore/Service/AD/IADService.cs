@@ -21,7 +21,9 @@ namespace FermCore.Service.AD
         /// <returns></returns>
         IEnumerable<AdType> GetAllAdType();
 
-        void Insert(AdModel ad, ObjectId ownerAdId, ObjectId adType);
+        void Insert(AdModel ad, ObjectId ownerAdId);
+
+        void InsertAdType(AdType adType);
 
         void Delete(ObjectId id);
 

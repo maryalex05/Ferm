@@ -8,13 +8,14 @@ using FermCore.Models;
 using FermCore.Service.Mongo;
 using FermCore.DB.Model;
 using Microsoft.AspNetCore.Authorization;
+using FermCore.Service.AD;
 
 namespace FermCore.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly MongoService _mongoService;
-        public HomeController(MongoService mongoService)
+        private readonly IADService _mongoService;
+        public HomeController(IADService mongoService)
         {
             _mongoService = mongoService;
         }
@@ -22,7 +23,7 @@ namespace FermCore.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            var a = _mongoService.GetAll<AdModel>("ad");
+            var a = _mongoService.GetAll();
             return View();
         }
 

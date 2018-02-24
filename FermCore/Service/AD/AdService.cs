@@ -15,7 +15,7 @@ namespace FermCore.Service.AD
         private readonly MongoService _mongoService;
 
         private string colName = "ad";
-        private string AdTypeCol = "AdType";
+        private string adTypeCol = "AdType";
 
         public AdService(DBMongo dbMongo,
             MongoService mongoService)
@@ -41,16 +41,23 @@ namespace FermCore.Service.AD
 
         public IEnumerable<AdType> GetAllAdType()
         {
-            return _mongoService.GetAll<AdType>(AdTypeCol);
+            return _mongoService.GetAll<AdType>(adTypeCol);
         }
 
-        public void Insert(AdModel ad, ObjectId ownerAdId, ObjectId adType)
+        public void Insert(AdModel ad, ObjectId ownerAdId)
         {
+            if (ad.AdTypeId == null)
+               throw new Exception();
+
             ad.OwnerAdId = ownerAdId;
             ad.TimeCreate = DateTime.Now;
-            ad.AdTypeId = adType;
 
             _mongoService.Insert(colName, ad);
+        }
+
+        public void InsertAdType(AdType adType)
+        {
+            _mongoService.Insert(adTypeCol, adType);
         }
 
         public void Delete(ObjectId id)
