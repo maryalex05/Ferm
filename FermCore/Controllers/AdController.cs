@@ -41,9 +41,10 @@ namespace FermCore.Controllers
         }
 
         [HttpPost]
-        public IActionResult AllAd(string adType, int page)
+        public IActionResult AllAd(FilterAdView filter, int page)
         {
-            return View();
+            var ads = _aDService.GetAll();
+            return View(ads);
         }
 
         [Authorize]
